@@ -9,6 +9,7 @@ This branch was developed for the first phase of Crawling Data project focused o
 
 ## Open a MSYS2 shell to install gtk3 runtime with this commandline, run:
 1. pacman -S mingw-w64-ucrt-x86_64-gtk3
+2. gcc --version
 
 ## Usage
 To run the data collection script for the hoadondientu website, you need to install the necessary libraries, replace the API on the website https://anticaptcha.top/documentapi, and enter your username and password.
