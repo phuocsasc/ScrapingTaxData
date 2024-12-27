@@ -9,14 +9,13 @@ This branch was developed for the first phase of Crawling Data project focused o
 ## Usage
 To run the data collection script for the hoadondientu website, you need to install the necessary libraries, replace the API on the website https://anticaptcha.top/documentapi, and enter your username and password.
 
-To run the data collection script for the thuedientu website, you need to install the necessary libraries, replace the API on the website https://autocaptcha.pro/quan-ly.html, and enter your username and password.
-
 ```python
-API_KEY = "bd0c772fd58bf0354019baecbdda41d2"
+#Replace with your generated api key on anticaptcha.top
+API_KEY = "#"
 ```
-Replace username and password equal to your current account. 
+Replace username and password equal to your current account from HoaDonDienTu. 
 ```python
-username = "0101652097-ql"
-password = "At2024$$$"
+username = "#"
+password = "#"
 ```
 
