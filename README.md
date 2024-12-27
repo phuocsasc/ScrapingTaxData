@@ -7,10 +7,10 @@ This branch was developed for the first phase of Crawling Data project focused o
 3. The script has compulsory python version 3.12.4
 
 ## Usage
-To run the data collection script for the hoadondientu website, you need to install the necessary libraries, replace the API on the website https://anticaptcha.top/documentapi, and enter your username and password.
+To run the data collection script for the thuedientu website, you need to install the necessary libraries, replace the API on the website https://autocaptcha.pro/quan-ly.html, and enter your username and password.
 
 ```python
-#Replace with your generated api key on anticaptcha.top
+#Replace with your generated api key on autocaptcha.pro
 API_KEY = "#"
 ```
 Replace username and password equal to your current account from HoaDonDienTu. 
