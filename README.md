@@ -18,4 +18,3 @@ Replace username and password equal to your current account from HoaDonDienTu.
 username = "#"
 password = "#"
 ```
-

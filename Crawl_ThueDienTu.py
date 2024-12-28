@@ -1,6 +1,5 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from sklearn.model_selection import train_test_split
 import pandas as pd
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -18,6 +17,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 import base64
+from selenium.webdriver.chrome.service import Service
 
 
 print('hello thuedientu')
@@ -26,12 +26,15 @@ print('hello thuedientu')
 def initialize_driver():
     """Khởi tạo trình duyệt Chrome."""
     chrome_options = Options()
-    chrome_options.add_argument("--headless=new") # for Chrome >= 109
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--force-device-scale-factor=1")
-    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument("--headless=new") # Chạy Chrome ở chế độ headless
+    chrome_options.add_argument("--disable-gpu") # Tắt GPU rendering
+    chrome_options.add_argument("--no-sandbox")  # Bỏ qua chế độ sandbox
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Vô hiệu hóa dev-shm usage
+    chrome_options.add_argument("--remote-debugging-port=9222")  # Cấu hình cổng cho DevTools
+    chrome_options.add_argument("--disable-software-rasterizer")  # Tắt phần mềm rasterizer (để tránh lỗi bộ nhớ thấp)
+    chrome_options.add_argument("--force-device-scale-factor=1")  # Điều chỉnh tỷ lệ hiển thị của thiết bị
     
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(service=Service("/usr/bin/chromedriver"),options=chrome_options)
     
     driver.maximize_window()  # Mở trình duyệt ở chế độ toàn màn hình
     time.sleep(2)
@@ -80,11 +83,6 @@ def login_to_thuedientu(driver, username, password):
 def save_captcha_image(driver):
     """Tải ảnh CAPTCHA về máy."""
     try:
-        # refresh_button = driver.find_element(By.CLASS_NAME, 'lam_moi_mxn')
-        # refresh_button.click()
-        # print("Refreshed CAPTCHA")
-
-        # Sau đó, chụp lại CAPTCHA mới
         captcha_element = driver.find_element(By.ID, 'safecode')
         captcha_element.screenshot("captcha_image.png")
         print("[INFO] CAPTCHA đã được lưu tại captcha_image.png")
@@ -92,7 +90,7 @@ def save_captcha_image(driver):
         print(f"[ERROR] Lỗi khi lưu ảnh CAPTCHA: {e}")
 
 
-API_KEY = "5d2ff0b5361d27f5abd737b04ae0d66c"  # Thay bằng API Key của bạn từ autocaptcha
+API_KEY = "dd8e2dc3c4294c706974f94165b3086b"  # Thay bằng API Key của bạn từ autocaptcha
 
 
 # Gửi ảnh lên autocaptcha để giải mã
@@ -184,9 +182,7 @@ def enter_verification_code(driver, captcha_image_path):
 
 
 
-
-
-
+# Nhập lại các ô thông tin khi giải captcha sai
 def retry_user_pass_doituong(driver, username, password):
     # Nhập tên đăng nhập
     username_field = driver.find_element(By.ID, '_userName')
@@ -458,11 +454,8 @@ def main():
     
     try:
         login_to_thuedientu(driver, username, password)
-        
         save_captcha_image(driver)
-        
         enter_verification_code(driver, captcha_image_path) # tự động
-        
         
         submit_form(driver, username, password, captcha_image_path)
         crawl(driver)
